@@ -21,7 +21,6 @@ def main():
 
     img_decode = gray.decode(imgs_posi, imgs_nega)
     
-    np.save("decode", img_decode)
     MAX = 2**len(imgs_posi)-1
     img_dst = (np.clip((img_decode/MAX*65535), 0, 65535)).astype(np.uint16)
     
