@@ -2,7 +2,7 @@
 
 ## Usage
 ```
-git clone https://github.com/elerac/codepattern
+git clone https://github.com/elerac/codepattern.git
 ```
 
 
