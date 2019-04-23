@@ -40,3 +40,6 @@ def main():
 if __name__=='__main__':
     main()
 ```
+
+## Reference
+- [グレイコードパターン投影/Computational なんとか](http://blog.k-tanaka.me/archives/8)
