@@ -58,12 +58,17 @@ def decode(posi_list, nega_list):
     N = len(posi_list)
 
     shape = posi_list[0].shape
+
+    c = len(shape)
     h, w = shape[:2]
     img_decode = np.zeros((h, w))
     for i in range(N):
         #binarize
-        diff = -nega_list[i].astype(np.float32)+posi_list[i].astype(np.float32)
+        diff = -nega_list[i].astype(np.float64)+posi_list[i].astype(np.float64)
         img_bin = (diff >= 0)*255
+
+        if c==3:
+            img_bin = cv2.split(img_bin)[0]
         
         #Decode
         if i==0:
