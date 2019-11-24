@@ -22,7 +22,7 @@ def zero_padding(code, length):
     bits.extend(code)
     return bits
 
-def generate(width, height, stripe_type, inverse=False):
+def generate(width, height, stripe_type=0, inverse=False):
     #0:vertical stripes, 1:horizontal stripes
     if stripe_type==0:
         w = height
