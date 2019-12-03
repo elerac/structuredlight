@@ -2,6 +2,7 @@
 
 ## Usage
 ### Export images
+The following example exports 256x180 gray code pattern images.
 ```
 $ python3 gray.py 256 180
 Export gray code images
