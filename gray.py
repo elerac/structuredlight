@@ -48,7 +48,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("width", type=int, help="width")
     parser.add_argument("height", type=int, help="height")
-    parser.add_argument("-t", "--type", type=int, default=0, help="stripe type (0:vertical, Other:horizontal)")
+    parser.add_argument("-t", "--type", type=int, default=0, help="stripe type (0:vertical, Others:horizontal)")
     parser.add_argument("-o", "--out", type=str, default=".", help="output directory")
     args = parser.parse_args()
     
