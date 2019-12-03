@@ -22,3 +22,20 @@ Export gray code images
 ./nega-7.png
 ./nega-8.png
 ```
+
+### Use as module
+```python
+import gray
+
+width = 1280
+height = 800
+
+imgs_posi = gray.generate(width, height, inverse=False)
+imgs_nega = gray.generate(width, height, inverse=True)
+
+#Projecting patterns from a projector
+#Capture images
+
+decode = gray.decode(imgs_posi, imgs_nega)
+print(decode)
+```
