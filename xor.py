@@ -1,95 +1,100 @@
-import cv2
 import numpy as np
-
-def int2bin(n):
-    if n:
-        bits = []
-        while n:
-            n,remainder = divmod(n, 2)
-            bits.insert(0, remainder)
-        return bits
-    else:
-         return [0]
- 
-def bin2gray(bits):
-    return bits[:1] + [i ^ ishift for i, ishift in zip(bits[:-1], bits[1:])]
-
-def zero_padding(code, length):
-    pad = length - len(code)
-    if pad == 0:
-        return code
-    bits = [0] * pad
-    bits.extend(code)
-    return bits
 
 def generate(width, height, index_last=-1, stripe_type=0, inverse=False):
     #0:vertical stripes, 1:horizontal stripes
-    if stripe_type==0:
-        w = height
-        h = width
-    elif stripe_type==1:
-        w = width
-        h = height
-
-    maxlen = len(int2bin(h))
-    bits = []
-    for i in range(h):
-        bits.append(zero_padding(bin2gray(int2bin(i)), maxlen))
-    line = np.zeros((h), np.uint8)
-    img_list = []
-    for i in range(maxlen):
-        for j in range(h):
-            line[j] = bits[j][i]*255
-        img = line
-        for k in range(w-1):
-            img = cv2.hconcat([img, line])
-
-        if stripe_type==0:
-            img_list.append(img.T)
-        elif stripe_type==1:
-            img_list.append(img)
-
-    #gray to xor
-    last_pattern = img_list[index_last].copy()
-    for i, img in enumerate(img_list):
-        img_list[i] = cv2.bitwise_xor(img, last_pattern)
-    img_list[index_last] = last_pattern.copy()
-        
-    if inverse==True:
-        img_list = [255-img for img in img_list]
-        
-    return img_list
-
-def decode(posi_list, nega_list, index_last=-1):
-    N = len(posi_list)
-
-    shape = posi_list[0].shape
-        
-    diff = -nega_list[index_last].astype(np.float64)+posi_list[index_last].astype(np.float64)
-    last_pattern = np.zeros(shape, dtype=np.uint8)
-    last_pattern[diff>=0] = 255
-    last_pattern[diff<0] = 0
-
-    img_decode = np.zeros(shape)
-    img_list = []
-    for i in range(N):
-        #binarize
-        diff = -nega_list[i].astype(np.float64)+posi_list[i].astype(np.float64)
-        img_bin = np.zeros(shape, dtype=np.uint8)
-        img_bin[diff>=0] = 255
-        img_bin[diff<0] = 0
-        
-        #xor to gray
-        img_bin = cv2.bitwise_xor(img_bin, last_pattern)
-        img_list.append(img_bin)
-    img_list[index_last] = last_pattern
-        
-    for i, img_bin in enumerate(img_list):
-        #Decode
-        if i==0:
-            binary = img_bin.copy()
-        else:
-            binary = cv2.bitwise_xor(binary, img_bin)
-        img_decode += (binary/255)*(2**(N-i-1))
+    if stripe_type!=0:
+        height, width = width, height
     
-    return img_decode.astype(np.uint16)
+    depth = len(bin(width-1))-2
+
+    #generate
+    gray_pattern = np.flip(np.fromfunction(lambda y,x,d: ((x^(x>>1))&(1<<d)!=0), (height,width,depth), dtype=int).astype(np.uint8), axis=2)
+
+    xor_pattern = np.empty((height, width, depth), dtype=np.uint8)
+    img_last = gray_pattern[:,:,index_last].copy()
+    for i in range(depth):
+        xor_pattern[:,:,i] = np.bitwise_xor(gray_pattern[:,:,i], img_last)
+    xor_pattern[:,:,index_last] = img_last.copy()
+    
+    if stripe_type!=0:
+        xor_pattern = xor_pattern.transpose(1, 0, 2)
+
+    if inverse==True:
+        xor_pattern = True - xor_pattern
+    
+    xor_pattern *= 255
+    imgs_xor = list(xor_pattern.transpose(2, 0, 1))
+    return imgs_xor
+
+def decode(imgs_posi, imgs_nega, index_last=-1):
+    height, width = imgs_posi[0].shape[:2]
+    depth = len(imgs_posi)
+
+    #binarization
+    posi = np.array(imgs_posi).transpose(1, 2, 0)
+    nega = np.array(imgs_nega).transpose(1, 2, 0)
+    xor_pattern = np.empty((height, width, depth), dtype=np.uint8)
+    xor_pattern[posi>=nega] = True
+    xor_pattern[posi<nega] = False
+    img_last = xor_pattern[:,:,index_last]
+
+    #xor_pattern > gray_pattern
+    gray_pattern = np.empty((height, width, depth), dtype=np.uint8)
+    for i in range(depth):
+        gray_pattern[:,:,i] = np.bitwise_xor(xor_pattern[:,:,i], img_last)
+    gray_pattern[:,:,index_last] = img_last.copy()
+
+    #gray_pattern > binary_pattern
+    binary_pattern = gray_pattern.copy()
+    for i in range(1, depth):
+        binary_pattern[:,:,i] = np.bitwise_xor(binary_pattern[:,:,i], binary_pattern[:,:,i-1])
+
+    #decode
+    binary_cofficient = np.flip(np.fromfunction(lambda y,x,d: 2**d, (height,width,depth), dtype=int), axis=2)
+    index_decode = np.sum(binary_pattern * binary_cofficient, axis=2)    
+    return index_decode
+
+def main():
+    import cv2
+    import os
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("width", type=int, help="width")
+    parser.add_argument("height", type=int, help="height")
+    parser.add_argument("-t", "--type", type=int, default=0, help="stripe type (0:vertical, Others:horizontal)")
+    parser.add_argument("-o", "--out", type=str, default=".", help="output directory")
+    args = parser.parse_args()
+    
+    width = args.width
+    height = args.height
+    stripe_type = args.type
+
+    #generate xor code images
+    imgs_posi = generate(width, height, stripe_type=stripe_type, inverse=False)
+    imgs_nega = generate(width, height, stripe_type=stripe_type, inverse=True)
+
+    #decode xor code images
+    img_decode = decode(imgs_posi, imgs_nega)
+
+    #export xor code images
+    out_dir = args.out
+    if os.path.isdir(out_dir)==False:
+        ret = os.makedirs(out_dir)
+        if ret==False:
+            print("false mkdir")
+            return -1
+        else:
+            print("mkdir {}".format(out_dir))
+   
+    print("Export xor code images")
+    for i, img in enumerate(imgs_posi):
+        name = os.path.join(out_dir, "posi-{0}.png".format(i+1))
+        print(name)
+        cv2.imwrite(name, img)
+    for i, img in enumerate(imgs_nega):
+        name = os.path.join(out_dir, "nega-{0}.png".format(i+1))
+        print(name)
+        cv2.imwrite(name, img)
+
+if __name__=="__main__":
+    main()
