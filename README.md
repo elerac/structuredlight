@@ -24,7 +24,7 @@ Export gray code images
 ./nega-8.png
 ```
 
-### Use as module
+### Use as a module
 ```python
 import gray
 
