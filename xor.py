@@ -62,19 +62,21 @@ def main():
     parser.add_argument("width", type=int, help="width")
     parser.add_argument("height", type=int, help="height")
     parser.add_argument("-t", "--type", type=int, default=0, help="stripe type (0:vertical, Others:horizontal)")
+    parser.add_argument("-i", "--index_last", type=int, default=-1, help="last pattern index")
     parser.add_argument("-o", "--out", type=str, default=".", help="output directory")
     args = parser.parse_args()
     
     width = args.width
     height = args.height
     stripe_type = args.type
+    index_last = args.index_last
 
     #generate xor code images
-    imgs_posi = generate(width, height, stripe_type=stripe_type, inverse=False)
-    imgs_nega = generate(width, height, stripe_type=stripe_type, inverse=True)
+    imgs_posi = generate(width, height, index_last=index_last, stripe_type=stripe_type, inverse=False)
+    imgs_nega = generate(width, height, index_last=index_last, stripe_type=stripe_type, inverse=True)
 
     #decode xor code images
-    img_decode = decode(imgs_posi, imgs_nega)
+    img_decode = decode(imgs_posi, imgs_nega, index_last=index_last)
 
     #export xor code images
     out_dir = args.out
