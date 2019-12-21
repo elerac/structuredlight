@@ -84,7 +84,8 @@ def main():
     imgs_unstructured = generate(width, height, N)
 
     #decode unstructured code images
-    #img_decode = decode(imgs_posi, imgs_nega)
+    #imgs_cap = [cv2.resize(img, None, fx=1.2, fy=1.1) for img in imgs_unstructured]
+    #img_decode = decode(imgs_cap, imgs_unstructured)
 
     #export unstructured code images
     out_dir = args.out
