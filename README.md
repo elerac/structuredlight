@@ -1,4 +1,5 @@
 # structured_light
+These programs generate and decode structured light. Currently supports Binary code, Gray code, XOR code, Unstructured light and Single stripe.
 
 ## Usage
 ### Export images
