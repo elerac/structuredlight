@@ -43,27 +43,6 @@ def decode(imgs_cap, imgs_proj):
     index_decode = np.reshape(_ids, (height_cap, width_cap, 2))
     return index_decode
 
-def main():
-    import cv2
-    width = 200
-    height = 150
-    N = 50
-    print(width, height, N)
-
-    imgs_proj = generate(width, height, N)
-    print("Generate")
-
-    imgs_cap = [cv2.resize(img,None,fx=1.5,fy=1.2).astype(np.float32)*0.5+80 for img in imgs_proj]
-
-    img_decode = decode(imgs_cap, imgs_proj)
-    print("Decode")
-
-    zero = np.zeros(img_decode.shape[:2], dtype=np.uint8)
-    img_decode = (img_decode/np.max(img_decode)*255).astype(np.uint8)
-    img_show = cv2.merge([zero, img_decode[:,:,0], img_decode[:,:,1]])
-    cv2.imshow("decode", img_show)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
 def main():
     import cv2
