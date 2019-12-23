@@ -41,7 +41,7 @@ def decode(imgs_cap, imgs_proj):
     dists, ids = index.search(x=Q, k=1)
     _ids = np.array([np.unravel_index(i, (height_proj, width_proj)) for i in ids[:,0]])
     index_decode = np.reshape(_ids, (height_cap, width_cap, 2))
-    return index_decode
+    return list(index_decode.transpose(2, 0, 1))
 
 
 def main():
@@ -64,7 +64,7 @@ def main():
 
     #decode unstructured code images
     #imgs_cap = [cv2.resize(img, None, fx=1.2, fy=1.1) for img in imgs_unstructured]
-    #img_decode = decode(imgs_cap, imgs_unstructured)
+    #decode_h, decode_v = decode(imgs_cap, imgs_unstructured)
 
     #export unstructured code images
     out_dir = args.out
