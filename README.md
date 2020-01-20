@@ -1,11 +1,11 @@
-# structured_light
+# Structured Light
 These programs generate and decode structured light. Currently supports `Binary code`, `Gray code`, `XOR code`, `Unstructured light`, `Single spot` and `Single stripe`.
 
 ## Usage
 ### Export images
 The following example exports 256x180 gray code pattern images.
 ```
-$ python3 gray.py 256 180
+python gray.py 256 180
 ```
 
 ### Use as a module
