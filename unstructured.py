@@ -1,5 +1,4 @@
 import numpy as np
-import faiss
 
 def generate(width, height, N, seed=0):
     assert width*height<=2**N, "width*height<=2**N"
@@ -24,6 +23,7 @@ def generate(width, height, N, seed=0):
     return imgs_unstructured
 
 def decode(imgs_cap, imgs_proj):
+    import faiss
     height_cap, width_cap = imgs_cap[0].shape[:2]
     height_proj, width_proj = imgs_proj[0].shape[:2]
     assert len(imgs_cap)==len(imgs_proj), "len(imgs_cap)==len(imgs_proj)"
