@@ -23,15 +23,19 @@ gray = sl.Gray()
 
 imgs_code = gray.generate((width, height))
 
-# Projecting patterns from a projector (or display)
-# And capture images
+# Projecting patterns from a projector (or display) and capture images
 imgs_captured = imgs_code
 
-decode = gray.decode(imgs_captured)
+decode = gray.decode(imgs_captured, thresh=127)
+
 print(decode)
+# [[  0   1   2 ... 637 638 639]
+#  [  0   1   2 ... 637 638 639]
+#  ...
+#  [  0   1   2 ... 637 638 639]]
 ```
 
-## Supported Structured-Light
+## Supported structured light
 
 ### Binary code
 ![](documents/binary.gif)
