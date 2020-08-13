@@ -16,9 +16,7 @@ class PhaseShifting(StructuredLight):
         return patternImages
 
     def decode(self, patternImages):
-        height, width = patternImages[0].shape[:2]
         num = len(patternImages)
-        w = 2*np.pi/width
         
         n = np.arange(0, num)
         R = self.merge(patternImages)
@@ -31,5 +29,4 @@ class PhaseShifting(StructuredLight):
         img_phase = np.arccos(U2/A)
         img_phase[U3<0] = 2*np.pi - img_phase[U3<0]
         
-        img_index = img_phase/w
-        return img_index
+        return img_phase
