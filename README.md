@@ -33,20 +33,20 @@ print(decode)
 
 ## Supported Structured-Light
 
-## Binary code
+### Binary code
 ![](documents/binary.gif)
 
-## Gray code
+### Gray code
 ![](documents/gray.gif)
 
-## XOR code
+### XOR code
 ![](documents/xor.gif)
 
-## Ramp code
+### Ramp code
 ![](documents/ramp.gif)
 
-## Phase-Shifting
+### Phase-Shifting
 ![](documents/phaseshifting.gif)
 
-## Single stripe
+### Single stripe
 ![](documents/stripe.gif)
