@@ -12,6 +12,13 @@ Currently supports
 ## Requirement
 * Numpy
 
+## Installation
+```sh
+git clone https://github.com/elerac/structuredlight.git 
+cd structuredlight
+python setup.py install
+```
+
 ## Usage
 ```python
 import structuredlight as sl
