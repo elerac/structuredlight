@@ -46,18 +46,48 @@ print(decode)
 
 ### Binary code
 ![](documents/binary.gif)
+```python
+binary = sl.Binary()
+imgs_code = binary.generate((width, height))
+decode    = binary.decode(imgs_code, thresh=127)
+```
 
 ### Gray code
 ![](documents/gray.gif)
+```python
+gray = sl.Gray()
+imgs_code = gray.generate((width, height))
+decode    = gray.decode(imgs_code, thresh=127)
+```
 
 ### XOR code
 ![](documents/xor.gif)
+```python
+xor = sl.XOR(index_last=-1)
+imgs_code = xor.generate((width, height))
+decode    = xor.decode(imgs_code, thresh=127)
+```
 
 ### Ramp code
 ![](documents/ramp.gif)
+```python
+ramp = sl.Ramp()
+imgs_code = ramp.generate((width, height))
+decode    = ramp.decode(imgs_code)
+```
 
 ### Phase-Shifting
 ![](documents/phaseshifting.gif)
+```python
+phaseshifting = sl.PhaseShifting(num=3)
+imgs_code = phaseshifting.generate((width, height))
+decode    = phaseshifting.decode(imgs_code)
+```
 
 ### Single stripe
 ![](documents/stripe.gif)
+```python
+stripe = sl.Stripe()
+imgs_code = stripe.generate((width, height))
+decode    = stripe.decode(imgs_code)
+```
