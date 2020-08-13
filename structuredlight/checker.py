@@ -34,5 +34,5 @@ class Checker(StructuredLight):
         
         max_val = np.iinfo(dtype).max if (dtype==np.uint8 or dtype==np.uint16) else np.finfo(dtype).max
         img_direct = np.clip(img_max - img_min, 0, max_val).astype(dtype)
-        img_global = np.clip(2.0*img_min, 0, max_val).astype(dtype)
+        img_global = np.clip(    2.0 * img_min, 0, max_val).astype(dtype)
         return img_direct, img_global
