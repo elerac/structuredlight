@@ -92,5 +92,9 @@ imgs_code = stripe.generate((width, height))
 decode    = stripe.decode(imgs_code)
 ```
 
-## How to binarize a grayscale image?
+## Tips
+### How to binarize a grayscale image
 Some of the code (Binary, Gray, XOR, ...) needs to binarize. This program provides three methods. [See the wiki for details.](https://github.com/elerac/structuredlight/wiki#how-to-binarize-a-grayscale-image)
+
+### How to display images in full screen
+When you use structured light, you'll need a full screen display from a projector or display. [Here is a program to display the image in full screen.](https://github.com/elerac/fullscreen)
