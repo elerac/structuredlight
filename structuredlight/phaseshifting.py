@@ -2,10 +2,10 @@ import numpy as np
 from structuredlight import StructuredLight
 
 class PhaseShifting(StructuredLight):
-    def __init__(self, num=3):
+    def __init__(self, num=3, F=1.0):
         self.num = num
+        self.F = F
         self.width = None
-        self.F = 1.0
     
     def generate(self, dsize):
         width, height = dsize
