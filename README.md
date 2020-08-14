@@ -91,3 +91,6 @@ stripe = sl.Stripe()
 imgs_code = stripe.generate((width, height))
 decode    = stripe.decode(imgs_code)
 ```
+
+## How to binarize a grayscale image?
+Some of the code (Binary, Gray, XOR, ...) needs to binarize. This program provides three methods. [See the wiki for details.](https://github.com/elerac/structuredlight/wiki#how-to-binarize-a-grayscale-image)
