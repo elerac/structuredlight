@@ -6,11 +6,11 @@ class Stripe(StructuredLight):
         width, height = dsize
         num = width
 
-        img_code = 255*np.fromfunction(lambda y,x,n: x==n, (height, width, num), dtype=int).astype(np.uint8)
+        imgs_code = 255*np.fromfunction(lambda y,x,n: x==n, (height, width, num), dtype=int).astype(np.uint8)
         
-        patternImages = self.split(img_code)
-        return patternImages
+        imlist = self.split(imgs_code)
+        return imlist
 
-    def decode(self, patternImages):
-        index_decode = np.argmax(patternImages, axis=0)
-        return index_decode
+    def decode(self, imlist):
+        img_index = np.argmax(imlist, axis=0)
+        return img_index

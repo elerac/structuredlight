@@ -10,16 +10,16 @@ class PhaseShifting(StructuredLight):
         num = self.num
         w = 2*np.pi/width
 
-        img_code = (255*np.fromfunction(lambda y,x,n: 0.5*(np.cos(w*x + 2*np.pi*n/num) + 1), (height,width,num), dtype=float)).astype(np.uint8)
+        imgs_code = (255*np.fromfunction(lambda y,x,n: 0.5*(np.cos(w*x + 2*np.pi*n/num) + 1), (height,width,num), dtype=float)).astype(np.uint8)
         
-        patternImages = self.split(img_code)
-        return patternImages
+        imlist = self.split(imgs_code)
+        return imlist
 
-    def decode(self, patternImages):
-        num = len(patternImages)
+    def decode(self, imlist):
+        num = len(imlist)
         
         n = np.arange(0, num)
-        R = self.merge(patternImages)
+        R = self.merge(imlist)
         M = np.array([np.ones_like(n), np.cos(2*np.pi*n/num), -np.sin(2*np.pi*n/num)]).T #(num, 3)
         M_pinv = np.linalg.inv(M.T @ M) @ M.T #(3, num)
         U = np.tensordot(M_pinv, R, axes=(1,2)).transpose(1, 2, 0) #(height, width, 3)

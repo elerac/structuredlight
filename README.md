@@ -28,14 +28,14 @@ height = 480
 
 gray = sl.Gray()
 
-imgs_code = gray.generate((width, height))
+imlist_pattern = gray.generate((width, height))
 
 # Projecting patterns from a projector (or display) and capture images
-imgs_captured = imgs_code
+imlist_captured = imlist_pattern
 
-decode = gray.decode(imgs_captured, thresh=127)
+img_index = gray.decode(imlist_captured, thresh=127)
 
-print(decode)
+print(img_index)
 # [[  0   1   2 ... 637 638 639]
 #  [  0   1   2 ... 637 638 639]
 #  ...
@@ -48,48 +48,48 @@ print(decode)
 ![](documents/binary.gif)
 ```python
 binary = sl.Binary()
-imgs_code = binary.generate((width, height))
-decode    = binary.decode(imgs_code, thresh=127)
+imlist_pattern = binary.generate((width, height))
+img_index    = binary.decode(imlist_pattern, thresh=127)
 ```
 
 ### Gray code
 ![](documents/gray.gif)
 ```python
 gray = sl.Gray()
-imgs_code = gray.generate((width, height))
-decode    = gray.decode(imgs_code, thresh=127)
+imlist_pattern = gray.generate((width, height))
+img_index    = gray.decode(imlist_pattern, thresh=127)
 ```
 
 ### XOR code
 ![](documents/xor.gif)
 ```python
 xor = sl.XOR(index_last=-1)
-imgs_code = xor.generate((width, height))
-decode    = xor.decode(imgs_code, thresh=127)
+imlist_pattern = xor.generate((width, height))
+img_index    = xor.decode(imlist_pattern, thresh=127)
 ```
 
 ### Ramp code
 ![](documents/ramp.gif)
 ```python
 ramp = sl.Ramp()
-imgs_code = ramp.generate((width, height))
-decode    = ramp.decode(imgs_code)
+imlist_pattern = ramp.generate((width, height))
+img_index    = ramp.decode(imlist_pattern)
 ```
 
 ### Phase-Shifting
 ![](documents/phaseshifting.gif)
 ```python
 phaseshifting = sl.PhaseShifting(num=3)
-imgs_code = phaseshifting.generate((width, height))
-decode    = phaseshifting.decode(imgs_code)
+imlist_pattern = phaseshifting.generate((width, height))
+img_index    = phaseshifting.decode(imlist_pattern)
 ```
 
 ### Single stripe
 ![](documents/stripe.gif)
 ```python
 stripe = sl.Stripe()
-imgs_code = stripe.generate((width, height))
-decode    = stripe.decode(imgs_code)
+imlist_pattern = stripe.generate((width, height))
+img_index    = stripe.decode(imlist_pattern)
 ```
 
 ## Tips

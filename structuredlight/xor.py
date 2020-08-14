@@ -9,38 +9,38 @@ class XOR(StructuredLight):
         width, height = dsize
         num = len(bin(width-1))-2
 
-        img_gray = 255*np.fromfunction(lambda y,x,n: ((x^(x>>1))&(1<<(num-1-n))!=0), (height,width,num), dtype=int).astype(np.uint8)
+        imgs_gray = 255*np.fromfunction(lambda y,x,n: ((x^(x>>1))&(1<<(num-1-n))!=0), (height,width,num), dtype=int).astype(np.uint8)
         
         # Convert gray code to xor code
-        img_xor = np.empty((height, width, num), dtype=np.uint8)
-        img_last = img_gray[:,:,self._index_last].copy()
+        imgs_xor = np.empty((height, width, num), dtype=np.uint8)
+        img_last = imgs_gray[:,:,self._index_last].copy()
         for i in range(num):
-            img_xor[:,:,i] = np.bitwise_xor(img_gray[:,:,i], img_last)
-        img_xor[:,:,self._index_last] = img_last.copy()
+            imgs_xor[:,:,i] = np.bitwise_xor(imgs_gray[:,:,i], img_last)
+        imgs_xor[:,:,self._index_last] = img_last.copy()
         
-        patternImages = self.split(img_xor)
-        return patternImages
+        imlist = self.split(imgs_xor)
+        return imlist
 
-    def decode(self, patternImages, thresh):
-        height, width = patternImages[0].shape[:2]
-        num = len(patternImages)
+    def decode(self, imlist, thresh):
+        height, width = imlist[0].shape[:2]
+        num = len(imlist)
 
         # Binaryization
-        img_xor = self.binarize(patternImages, thresh)
+        imgs_xor = self.binarize(imlist, thresh)
 
         # Convert xor code to gray code
-        img_last = img_xor[:,:,self._index_last]
-        img_gray = np.empty((height, width, num), dtype=np.uint8)
+        img_last = imgs_xor[:,:,self._index_last]
+        imgs_gray = np.empty((height, width, num), dtype=np.uint8)
         for i in range(num):
-            img_gray[:,:,i] = np.bitwise_xor(img_xor[:,:,i], img_last)
-        img_gray[:,:,self._index_last] = img_last.copy()
+            imgs_gray[:,:,i] = np.bitwise_xor(imgs_xor[:,:,i], img_last)
+        imgs_gray[:,:,self._index_last] = img_last.copy()
 
         # Convert gray code to binary code
-        img_binary = img_gray
+        imgs_binary = imgs_gray
         for i in range(1, num):
-            img_binary[:,:,i] = np.bitwise_xor(img_binary[:,:,i], img_binary[:,:,i-1])
+            imgs_binary[:,:,i] = np.bitwise_xor(imgs_binary[:,:,i], imgs_binary[:,:,i-1])
 
         # Decode
         cofficient = np.fromfunction(lambda y,x,n: 2**(num-1-n), (height,width,num), dtype=int)
-        img_index = np.sum(img_binary * cofficient, axis=2)
+        img_index = np.sum(imgs_binary * cofficient, axis=2)
         return img_index

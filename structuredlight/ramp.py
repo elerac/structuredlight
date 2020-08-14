@@ -12,10 +12,10 @@ class Ramp(StructuredLight):
         img_white = 255*np.ones((height, width), dtype=np.uint8)
         img_ramp  = (255*np.fromfunction(lambda y,x: x/(width-1), (height,width), dtype=float)).astype(np.uint8)
         
-        patternImages = [img_white, img_ramp]
-        return patternImages
+        imlist = [img_white, img_ramp]
+        return imlist
 
-    def decode(self, patternImages):
+    def decode(self, imlist):
         img_white = patternImages[0]
         img_ramp  = patternImages[1]
 

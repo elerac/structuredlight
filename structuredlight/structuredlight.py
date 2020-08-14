@@ -5,16 +5,16 @@ class StructuredLight:
         # dsize = (width, height)
         raise NotImplementedError()
 
-    def decode(self):
+    def decode(self, imlist):
         raise NotImplementedError()
     
     @staticmethod
-    def split(mv):
-        return list(mv.transpose(2, 0, 1))
+    def split(imgs):
+        return list(imgs.transpose(2, 0, 1))
 
     @staticmethod
-    def merge(m):
-        return np.dstack(m)
+    def merge(imlist):
+        return np.dstack(imlist)
     
     @staticmethod
     def binarize(src, thresh):
@@ -44,8 +44,8 @@ class StructuredLight:
             if src.ndim == 3 and thresh.ndim == 2: # (src:2, thresh:1) case
                 thresh = np.dstack([thresh]*src.shape[2])
         
-        img_thresh = thresh * np.ones_like(src)
+        imgs_thresh = thresh * np.ones_like(src)
         img_bin = np.empty_like(src, dtype=np.uint8)
-        img_bin[src>=img_thresh] = True
-        img_bin[src<img_thresh] = False
+        img_bin[src>=imgs_thresh] = True
+        img_bin[src<imgs_thresh] = False
         return img_bin
