@@ -48,48 +48,48 @@ print(img_index)
 ![](documents/binary.gif)
 ```python
 binary = sl.Binary()
-imlist_pattern = binary.generate((width, height))
-img_index    = binary.decode(imlist_pattern, thresh=127)
+imlist = binary.generate((width, height))
+img_index = binary.decode(imlist, thresh=127)
 ```
 
 ### Gray code
 ![](documents/gray.gif)
 ```python
 gray = sl.Gray()
-imlist_pattern = gray.generate((width, height))
-img_index    = gray.decode(imlist_pattern, thresh=127)
+imlist = gray.generate((width, height))
+img_index = gray.decode(imlist, thresh=127)
 ```
 
 ### XOR code
 ![](documents/xor.gif)
 ```python
 xor = sl.XOR(index_last=-1)
-imlist_pattern = xor.generate((width, height))
-img_index    = xor.decode(imlist_pattern, thresh=127)
+imlist = xor.generate((width, height))
+img_index = xor.decode(imlist, thresh=127)
 ```
 
 ### Ramp code
 ![](documents/ramp.gif)
 ```python
 ramp = sl.Ramp()
-imlist_pattern = ramp.generate((width, height))
-img_index    = ramp.decode(imlist_pattern)
+imlist = ramp.generate((width, height))
+img_index = ramp.decode(imlist)
 ```
 
 ### Phase-Shifting
 ![](documents/phaseshifting.gif)
 ```python
 phaseshifting = sl.PhaseShifting(num=3)
-imlist_pattern = phaseshifting.generate((width, height))
-img_index    = phaseshifting.decode(imlist_pattern)
+imlist = phaseshifting.generate((width, height))
+img_index = phaseshifting.decode(imlist)
 ```
 
 ### Single stripe
 ![](documents/stripe.gif)
 ```python
 stripe = sl.Stripe()
-imlist_pattern = stripe.generate((width, height))
-img_index    = stripe.decode(imlist_pattern)
+imlist = stripe.generate((width, height))
+img_index = stripe.decode(imlist)
 ```
 
 ## Tips
