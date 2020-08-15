@@ -1,3 +1,6 @@
+"""
+Export all structured light patterns
+"""
 import os
 import cv2
 import structuredlight as sl
