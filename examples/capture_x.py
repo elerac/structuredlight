@@ -16,7 +16,7 @@ def main():
     width  = 640
     height = 480
 
-    cap = cv2.VideoCapture(0) # External web camera
+    cap = cv2.VideoCapture(1) # External web camera
     gray = sl.Gray()
    
     # Generate and Decode x-coorde
