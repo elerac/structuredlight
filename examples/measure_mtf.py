@@ -20,7 +20,7 @@ def main():
     ix = width//2
     iy = height//2
     
-    # Spatialy frequency
+    # Spatial frequency
     Fmax = 100 # Maximum freq
     Fmin = 0.1 # Minimum freq
     Nf = 50    # Number of frequency types
