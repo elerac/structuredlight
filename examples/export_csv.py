@@ -1,5 +1,5 @@
 """
-Export decode result (camera-projector correspondence index) to csv format
+Export decode result (camera-projector correspondence index) as csv format
 """
 import cv2
 import numpy as np
