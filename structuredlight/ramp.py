@@ -16,10 +16,12 @@ class Ramp(StructuredLight):
         return imlist
 
     def decode(self, imlist):
-        img_white = imlist[0]
-        img_ramp  = imlist[1]
-
-        img_ratio = img_ramp/img_white
-        
+        img_ratio = self.decodeRatio(imlist)
         img_index = img_ratio*(self.width-1)
         return img_index
+
+    def decodeRatio(self, imlist):
+        img_white = imlist[0]
+        img_ramp  = imlist[1]
+        img_ratio = img_ramp/img_white
+        return img_ratio
