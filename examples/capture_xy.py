@@ -20,7 +20,7 @@ def main():
     gray = sl.Gray()
    
     
-    # Generate and Decode x-coorde
+    # Generate and Decode x-coord
     # Generate
     imlist_posi_x_pat = gray.generate((width, height))
     imlist_nega_x_pat = sl.invert(imlist_posi_x_pat)
@@ -33,7 +33,7 @@ def main():
     img_index_x = gray.decode(imlist_posi_x_cap, imlist_nega_x_cap)
 
     
-    # Generate and Decode y-coorde
+    # Generate and Decode y-coord
     # Generate
     imlist = gray.generate((height, width))
     imlist_posi_y_pat = sl.transpose(imlist)

@@ -19,7 +19,7 @@ def main():
     cap = cv2.VideoCapture(1) # External web camera
     gray = sl.Gray()
    
-    # Generate and Decode x-coorde
+    # Generate and Decode x-coord
     # Generate
     imlist_posi_pat = gray.generate((width, height))
     imlist_nega_pat = sl.invert(imlist_posi_pat)
