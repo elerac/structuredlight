@@ -10,3 +10,5 @@ from .phaseshifting import PhaseShifting
 from .stripe import Stripe
 
 from .checker import Checker
+
+from .util import *
