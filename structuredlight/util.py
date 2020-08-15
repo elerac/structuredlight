@@ -28,8 +28,8 @@ def getCorrespondenceTable(img_index_x, img_index_y=None):
     
     if img_index_y is not None:
         prj_y = img_index_y[cam_y, cam_x]
-        correspondence_table = np.stack([cam_x, cam_y, prj_x, prj_y]).astype(np.uint16).T
+        correspondence_table = np.stack([cam_x, cam_y, prj_x, prj_y]).T
     else:
-        correspondence_table = np.stack([cam_x, cam_y, prj_x]).astype(np.uint16).T
+        correspondence_table = np.stack([cam_x, cam_y, prj_x]).T
     
     return correspondence_table
