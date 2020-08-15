@@ -11,6 +11,15 @@ S.K. Nayar, G. Krishnan, M. D. Grossberg, R. Raskar, "Fast Separation of Direct 
 
 class Checker(StructuredLight):
     def __init__(self, sqsize=3, step=1):
+        """
+        sqsize : int
+          Square size of checker pattern (pixel)
+
+        step : int
+          step decide how much to move the checker
+          Smaller size reduces the number of artifacts. However, the number of projections will increase.
+          sqsize > step >= 1
+        """
         self.sqsize = sqsize
         self.step = step
 
