@@ -36,13 +36,16 @@ class Checker(StructuredLight):
         return imlist
 
     def decode(self, imlist):
-        imgs_code = self.merge(imlist)
-        dtype = imgs_code.dtype
-
-        img_max = np.max(imgs_code, axis=2)
-        img_min = np.min(imgs_code, axis=2)
-        
+        dtype = imlist[0].dtype
         max_val = np.iinfo(dtype).max if (dtype==np.uint8 or dtype==np.uint16) else np.finfo(dtype).max
-        img_direct = np.clip(img_max - img_min, 0, max_val).astype(dtype)
-        img_global = np.clip(    2.0 * img_min, 0, max_val).astype(dtype)
+
+        img_min = np.full_like(imlist[0], max_val, dtype=dtype)
+        img_max = np.full_like(imlist[0],       0, dtype=dtype)
+
+        for img in imlist:
+            img_min = np.minimum(img_min, img)
+            img_max = np.maximum(img_max, img)
+        
+        img_direct = np.clip(img_max - img_min, 0, max_val)
+        img_global = np.clip(    2.0 * img_min, 0, max_val)
         return img_direct, img_global
