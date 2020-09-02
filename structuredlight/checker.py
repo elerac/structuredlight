@@ -10,7 +10,7 @@ S.K. Nayar, G. Krishnan, M. D. Grossberg, R. Raskar, "Fast Separation of Direct 
 """
 
 class Checker(StructuredLight):
-    def __init__(self, sqsize=3, step=1):
+    def __init__(self, sqsize=8, step=2):
         """
         sqsize : int
           Square size of checker pattern (pixel)
@@ -25,7 +25,8 @@ class Checker(StructuredLight):
 
     def generate(self, dsize):
         width, height = dsize
-        num_x = num_y = self.sqsize//self.step
+        num_x = self.sqsize//self.step
+        num_y = num_x*2
 
         #generate
         imgs4D_code = 255*np.fromfunction(lambda y,x,ny,nx: (((x+nx*self.step)//self.sqsize)+((y+ny*self.step)//self.sqsize))%2, (height,width,num_y,num_x), dtype=int).astype(np.uint8)
