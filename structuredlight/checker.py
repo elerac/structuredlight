@@ -47,5 +47,5 @@ class Checker(StructuredLight):
             img_max = np.maximum(img_max, img)
         
         img_direct = np.clip(img_max - img_min, 0, max_val)
-        img_global = np.clip(    2.0 * img_min, 0, max_val)
+        img_global = np.clip(      2 * img_min, 0, max_val)
         return img_direct, img_global
