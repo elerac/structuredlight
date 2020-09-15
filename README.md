@@ -14,9 +14,7 @@ Currently supports
 
 ## Installation
 ```sh
-git clone https://github.com/elerac/structuredlight.git 
-cd structuredlight
-python setup.py install
+pip install git+https://github.com/elerac/structuredlight
 ```
 
 ## Usage
