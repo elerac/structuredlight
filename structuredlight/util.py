@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Tuple
 
 def transpose(imlist):
     """
@@ -12,24 +13,55 @@ def invert(imlist):
     """
     return [ 255-img for img in imlist]
 
-def getCorrespondenceTable(img_index_x, img_index_y=None):
+def getCorrespondencePoints(img_correspondence_x: np.ndarray, 
+                           img_correspondence_y: np.ndarray=None, 
+                           img_mask: np.ndarray=None) -> Tuple[np.ndarray]:
     """
-    Convert a correspondence table from the index image.
+    Convert a correspondence points from the correspondence map image
 
-    correspondence_table : array_like
-        correspondence table of camera index and projector index
-        array shape is (height_cam*width_cam, 3 or 4)
-        cam_x, cam_y, proj_x, proj_y (or not)
+    ```
+    # Usage
+    import structuredlight as sl
+    gray = sl.Gray()
+    imlist = gray.generate((640, 480))
+    img_index_x = gray.decode(imlist)
+    campoints, prjpoints = sl.getCorrespondenceTable(img_index_x)
+    ```
+
+    Parameters
+    ----------
+    img_correspondence_x : np.ndarray, (height, width)
+        x-coorde correspondence map image
+    img_correspondence_y : np.ndarray, (height, width)
+        y-coorde correspondence map image (option)
+    img_mask : np.ndarray, (height, width)
+        mask image (option)
+
+    Returns
+    -------
+    campoints : np.ndarray, (N, 2)
+        2D camera points
+        [[x1, y1], [x2, y2], ..., [xn,yn]]
+    prjpoints : np.ndarray, (N,) or (N, 2)
+        2D camera points
+        [[x1, x2, ...,xn]
+        or
+        [[x1, y1], [x2, y2], ..., [xn,yn]]
     """
-    height_cam, width_cam = img_index_x.shape[:2]
-    cam_y, cam_x = np.where(np.ones((height_cam, width_cam))) # camera image index x, y
+    # Camera points
+    height_cam, width_cam = img_correspondence_x.shape[:2]
+    if img_mask is None:
+        img_mask = np.ones((height_cam, width_cam))
+    cam_y, cam_x = np.where(np.ones((height_cam, width_cam)) * img_mask)
+    campoints = np.array([cam_x, cam_y]).T
     
-    prj_x = img_index_x[cam_y, cam_x]
-    
-    if img_index_y is not None:
-        prj_y = img_index_y[cam_y, cam_x]
-        correspondence_table = np.stack([cam_x, cam_y, prj_x, prj_y]).T
+    # Projector points
+    if img_correspondence_y is None:
+        prj_x = img_correspondence_x[cam_y, cam_x]
+        prjpoints = prj_x
     else:
-        correspondence_table = np.stack([cam_x, cam_y, prj_x]).T
+        prj_x = img_correspondence_x[cam_y, cam_x]
+        prj_y = img_correspondence_y[cam_y, cam_x]
+        prjpoints = np.array([prj_x, prj_y]).T
     
-    return correspondence_table
+    return campoints, prjpoints
