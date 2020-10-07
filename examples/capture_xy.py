@@ -47,10 +47,6 @@ def main():
     img_index_y = gray.decode(imlist_posi_y_cap, imlist_nega_y_cap)
    
 
-    # Write correspondence table
-    corr_table = sl.getCorrespondenceTable(img_index_x, img_index_y)
-    np.savetxt("correspondence.csv", corr_table, delimiter=",")
-    
     # Visualize decode result
     img_correspondence = cv2.merge([0.0*np.zeros_like(img_index_x), img_index_x/width, img_index_y/height])
     img_correspondence = np.clip(img_correspondence*255.0, 0, 255).astype(np.uint8)
