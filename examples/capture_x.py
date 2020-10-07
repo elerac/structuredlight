@@ -31,10 +31,6 @@ def main():
     # Decode
     img_index = gray.decode(imlist_posi_cap, imlist_nega_cap)
 
-    # Write correspondence table
-    corr_table = sl.getCorrespondenceTable(img_index)
-    np.savetxt("correspondence.csv", corr_table, delimiter=",")
-    
     # Visualize decode result
     img_correspondence = np.clip(img_index/width*255.0, 0, 255).astype(np.uint8)
     cv2.imshow("corresponnence map", img_correspondence)
