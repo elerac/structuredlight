@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='structuredlight',
-    version='1.0.0',
+    version='1.0.1',
     description='Generate and Decode structured light',
     url='https://github.com/elerac/structuredlight',
     author='Ryota Maeda',
