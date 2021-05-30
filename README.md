@@ -9,9 +9,6 @@ Currently supports
 * [Phase Shifting](#Phase-Shifting)
 * [Single stripe](#Single-stripe)
 
-## Requirement
-* Numpy
-
 ## Installation
 ```sh
 pip install git+https://github.com/elerac/structuredlight
