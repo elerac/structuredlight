@@ -13,5 +13,6 @@ from.unstructured import Unstructured
 from .stripe import Stripe
 
 from .checker import Checker
+from .lighttransport import LightTransport
 
 from .util import *
