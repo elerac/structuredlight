@@ -8,6 +8,8 @@ from .ramp import Ramp
 from .phaseshifting import PhaseShifting
 
 from .zncc import Zncc
+from.unstructured import Unstructured
+
 from .stripe import Stripe
 
 from .checker import Checker
